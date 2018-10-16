@@ -8,6 +8,8 @@ import {
   ViroScene,
   ViroText,
   Viro360Image,
+  ViroBox,
+  ViroMaterials,
 } from 'react-viro';
 
 export default class HelloWorldScene extends Component {
@@ -15,19 +17,37 @@ export default class HelloWorldScene extends Component {
   constructor() {
     super();
 
-    this.state = {} // Set initial state here
+    //set initial state here
+    this.state = {
+      text:"Hola amiga!",
+    }
+    //bind this to the class functions
+    this._onBoxHover = this._onBoxHover.bind(this); 
+    this._showHelloBeachScene = this._showHelloBeachScene.bind(this);
   }
 
   render() {
     return (
       <ViroScene>
-        <Viro360Image source={require('./res/guadalupe_360.jpg')} />
-        <ViroText text="Hello World!" width={2} height={2} position={[0, 0, -2]} style={styles.helloWorldTextStyle} />
+        <Viro360Image source={require('./res/360_park.jpg')} />
+        <ViroText text={this.state.text} width={2} height={2} position={[0, 0, -2]} style={styles.helloWorldTextStyle} />
+        <ViroBox position={[0, -1, -2]} scale={[.5,.5,.2]} materials={["grid"]} onHover={this._onBoxHover} onClick={this._showHelloBeachScene} />
       </ViroScene>
     );
   }
 
+  _onBoxHover(isHovering){
+    let text = isHovering ? "Hello Box!" : "Hola amiga!";
+    this.setState({
+      text
+    });
+  }
+  _showHelloBeachScene(){
+    this.props.sceneNavigator.push({scene:require("./HelloBeachScene.js")});
+  }
+
 }
+
 
 var styles = StyleSheet.create({
   helloWorldTextStyle: {
@@ -36,6 +56,12 @@ var styles = StyleSheet.create({
     color: '#ffffff',
     textAlignVertical: 'center',
     textAlign: 'center',  
+  },
+});
+
+ViroMaterials.createMaterials({
+  grid: {
+    diffuseTexture: require('./res/grid_bg.jpg'),
   },
 });
 
