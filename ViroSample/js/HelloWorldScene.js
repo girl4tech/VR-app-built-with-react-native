@@ -19,7 +19,7 @@ export default class HelloWorldScene extends Component {
 
     //set initial state here
     this.state = {
-      text:"Hola amiga!",
+      text:"Imagination is more important than knowledge",
     }
     //bind this to the class functions
     this._onBoxHover = this._onBoxHover.bind(this); 
@@ -30,14 +30,14 @@ export default class HelloWorldScene extends Component {
     return (
       <ViroScene>
         <Viro360Image source={require('./res/360_park.jpg')} />
-        <ViroText text={this.state.text} width={2} height={2} position={[0, 0, -2]} style={styles.helloWorldTextStyle} />
+        <ViroText text={this.state.text} width={12} height={2} position={[0, 0, -2]} style={styles.helloWorldTextStyle} />
         <ViroBox position={[0, -1, -2]} scale={[.5,.5,.2]} materials={["grid"]} onHover={this._onBoxHover} onClick={this._showHelloBeachScene} />
       </ViroScene>
     );
   }
 
   _onBoxHover(isHovering){
-    let text = isHovering ? "Hello Box!" : "Hola amiga!";
+    let text = isHovering ? "I am a box!" : "Imagination is more important than knowledge";
     this.setState({
       text
     });
